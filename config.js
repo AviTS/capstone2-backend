@@ -13,7 +13,7 @@ const BCRYPT_WORK_FACTOR = 10;
 const DB_URI =
   process.env.NODE_ENV === 'test'
     ? 'postgresql:///booksdb_test'
-    : 'postgresql:///booksdb';
+    : process.env.DATABASE_URL || 'postgresql:///booksdb';
 
 module.exports = {
   BCRYPT_WORK_FACTOR,
