@@ -6,9 +6,10 @@ const { GOOGLE_BOOKS_API_KEY } = require('../config');
 const Book = require('../models/book');
 
 async function bookSearch(searchTerms) {
-  // const result = await axios.get(
-  //   `${API_BASE_URL}?q=${searchTerms}&key=${GOOGLE_BOOKS_API_KEY}`
-  // );
+  const result = await axios.get(
+    `${API_BASE_URL}?q=${searchTerms}&key=${GOOGLE_BOOKS_API_KEY}`
+  );
+  console.log(result);
 
   const resData = result.data.items;
   // console.log(resData);
@@ -32,9 +33,9 @@ async function bookSearch(searchTerms) {
 }
 
 async function getBookDetails(volId) {
-  const book = Book.getBook(volId);
-  if (book !== null) {
-    return Book.getBook(volId);
+  const book = await Book.getBook(volId);
+  if (book !== undefined) {
+    return book;
   }
 
   const result = await axios.get(
@@ -44,9 +45,9 @@ async function getBookDetails(volId) {
   const resData = result.data;
 
   //note to self: check db for volId before any api call. if book isn't found, call api.
-
-  resData = resData.items[0];
-  // console.log(resData);
+  if (resData.items) {
+    resData = resData.items[0];
+  }
 
   const bookData = {
     external_book_id: resData.volumeInfo.id,

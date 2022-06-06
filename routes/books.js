@@ -10,19 +10,23 @@ const router = new express.Router();
 
 // const { BadRequestError } = require('../helpers/expressError');
 
-router.get('/search/q=:searchterm', async function (req, res, next) {
-  try {
-    const searchTerm = req.params.searchterm;
+router.get(
+  '/search/q=:searchterm',
+  isLoggedIn,
+  async function (req, res, next) {
+    try {
+      const searchTerm = req.params.searchterm;
 
-    const results = await bookSearch(searchTerm);
-    // console.log({ results });
-    return res.json({ results });
-  } catch (err) {
-    return next(err);
+      const results = await bookSearch(searchTerm);
+      console.log({ results });
+      return res.json({ results });
+    } catch (err) {
+      return next(err);
+    }
   }
-});
+);
 
-router.get('/:volId', async function (req, res, next) {
+router.get('/:volId', isLoggedIn, async function (req, res, next) {
   try {
     const volId = req.params.volId;
 
