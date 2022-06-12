@@ -3,7 +3,9 @@ const { SECRET_KEY } = require('../config');
 const {
   UnauthorizedError,
   ForbiddenError,
+  ExpressError,
 } = require('../helpers/expressError');
+const User = require('../models/user');
 
 function authenticateJWT(req, res, next) {
   try {
@@ -20,10 +22,12 @@ function authenticateJWT(req, res, next) {
   }
 }
 
-function isLoggedIn(req, res, next) {
+async function isLoggedIn(req, res, next) {
   try {
-    console.log(res.locals);
     if (!res.locals.user) throw new UnauthorizedError();
+
+    res.locals.user.user_id = await User.getUserId(res.locals.user.username);
+
     return next();
   } catch (err) {
     return next(err);

@@ -13,7 +13,7 @@ class User {
   //If false, throws error
   static async authenticate(username, password) {
     const result = await db.query(
-      `SELECT username, password
+      `SELECT user_id, username, password
       FROM users
       WHERE username = $1`,
       [username]
@@ -30,6 +30,21 @@ class User {
     }
 
     throw new UnauthorizedError('Invalid username/password');
+  }
+
+  static async getUserId(username) {
+    const result = await db.query(
+      `
+    SELECT user_id 
+    FROM users 
+    WHERE username =$1
+    `,
+      [username]
+    );
+
+    const user_id = result.rows[0].user_id;
+
+    return user_id;
   }
 
   //Register a new user and returns new user data.

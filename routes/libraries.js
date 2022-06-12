@@ -4,9 +4,10 @@ const router = new express.Router();
 const Library = require('../models/library');
 const { isLoggedIn } = require('../middleware/auth');
 
-router.post('/:user_id', isLoggedIn, async function (req, res, next) {
+router.post('/', isLoggedIn, async function (req, res, next) {
   try {
-    const user_id = req.params.user_id;
+    const user_id = res.locals.user.user_id;
+
     const book_id = +req.body.book_id;
 
     const book = await Library.addBook(user_id, book_id);
@@ -17,9 +18,9 @@ router.post('/:user_id', isLoggedIn, async function (req, res, next) {
   }
 });
 
-router.delete('/:user_id', isLoggedIn, async function (req, res, next) {
+router.delete('/', isLoggedIn, async function (req, res, next) {
   try {
-    const user_id = req.params.user_id;
+    const user_id = res.locals.user.user_id;
     const book_id = +req.body.book_id;
 
     await Library.removeBook(user_id, book_id);
@@ -32,9 +33,9 @@ router.delete('/:user_id', isLoggedIn, async function (req, res, next) {
   }
 });
 
-router.patch('/:user_id/rating', isLoggedIn, async function (req, res, next) {
+router.patch('/rating', isLoggedIn, async function (req, res, next) {
   try {
-    const user_id = req.params.user_id;
+    const user_id = res.locals.user.user_id;
     const book_id = +req.body.book_id;
     const rating = req.body.rating;
 
@@ -48,9 +49,9 @@ router.patch('/:user_id/rating', isLoggedIn, async function (req, res, next) {
   }
 });
 
-router.patch('/:user_id/notes', isLoggedIn, async function (req, res, next) {
+router.patch('/notes', isLoggedIn, async function (req, res, next) {
   try {
-    const user_id = req.params.user_id;
+    const user_id = res.locals.user.user_id;
     const book_id = +req.body.book_id;
     const note = req.body.note;
 
