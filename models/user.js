@@ -37,7 +37,7 @@ class User {
       `
     SELECT user_id 
     FROM users 
-    WHERE username =$1
+    WHERE username = $1
     `,
       [username]
     );
@@ -45,6 +45,21 @@ class User {
     const user_id = result.rows[0].user_id;
 
     return user_id;
+  }
+
+  static async getUser(username) {
+    const result = await db.query(
+      `SELECT user_id, username FROM users WHERE username = $1`,
+      [username]
+    );
+
+    const user = result.rows[0];
+
+    if (!user) throw new Error(`No user: ${username}`);
+
+    console.log(user);
+
+    return user;
   }
 
   //Register a new user and returns new user data.
