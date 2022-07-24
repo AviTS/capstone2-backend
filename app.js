@@ -8,7 +8,6 @@ const ExpressError = require('./helpers/expressError');
 const { authenticateJWT } = require('./middleware/auth');
 const authRoutes = require('./routes/auth');
 
-// const testRoutes = require('./routes/initialtest');
 const bookRoutes = require('./routes/books');
 const usersRoutes = require('./routes/users');
 const libraryRoutes = require('./routes/libraries');
@@ -17,7 +16,6 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(authenticateJWT);
-// app.use('/', testRoutes);
 
 app.use('/auth', authRoutes);
 app.use('/', bookRoutes);
