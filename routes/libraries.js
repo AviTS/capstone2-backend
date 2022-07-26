@@ -39,7 +39,7 @@ router.get('/:library_id', isLoggedIn, async function (req, res, next) {
   try {
     const user_id = res.locals.user.user_id;
 
-    const library_id = +req.body.library_id;
+    const library_id = req.params.library_id;
 
     const books = await Library.getBooksInLib(user_id, library_id);
 

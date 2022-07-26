@@ -69,7 +69,7 @@ class Library {
 
   static async getBooksInLib(user_id, library_id) {
     const result = await db.query(
-      `SELECT book_id FROM library_books WHERE user_id = $1 AND library_id = $2`,
+      `SELECT * FROM library_books WHERE user_id = $1 AND library_id = $2`,
       [user_id, library_id]
     );
 
