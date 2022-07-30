@@ -9,31 +9,30 @@ class Book {
     book_author,
     book_description,
     book_genre,
+    cover_img,
   }) {
     const duplicateCheck = await db.query(
-      `SELECT title
+      `SELECT external_book_id
            FROM books
-           WHERE title = $1`,
-      [book_title]
+           WHERE external_book_id = $1`,
+      [external_book_id]
     );
 
     if (!duplicateCheck.rows[0]) {
       const result = await db.query(
-        `INSERT INTO books (external_book_id, title, author, book_description, genre) VALUES ($1, $2, $3, $4, $5)`,
+        `INSERT INTO books (external_book_id, title, author, book_description, genre, cover_img) VALUES ($1, $2, $3, $4, $5, $6)`,
         [
           external_book_id,
           book_title,
           book_author,
           book_description,
           book_genre,
+          cover_img,
         ]
       );
     }
-    return;
-    // if (duplicateCheck.rows[0])
-    //   throw new BadRequestError(`Duplicate book: ${book_title}`, 400);
 
-    // return result.rows[0];
+    return;
   }
 
   static async getBook(external_book_id) {

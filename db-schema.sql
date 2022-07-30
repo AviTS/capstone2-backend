@@ -19,7 +19,8 @@ CREATE TABLE books (
   title TEXT NOT NULL,
   author TEXT,
   book_description TEXT,
-  genre TEXT
+  genre TEXT,
+  cover_img TEXT
 );
 
 
@@ -29,7 +30,8 @@ CREATE TABLE library_books (
   book_id INTEGER REFERENCES books (book_id) ON DELETE CASCADE,
   user_notes TEXT,
   user_rating INTEGER CHECK (user_rating > 0 AND user_rating <= 5),
-  PRIMARY KEY (library_id, book_id, user_id)
+  PRIMARY KEY (library_id, book_id, user_id),
+  read_status BOOLEAN DEFAULT FALSE
   -- note: is it necessary to have user_id in library_books?
   -- Think about user's having libraries and libraries having books. 
 );

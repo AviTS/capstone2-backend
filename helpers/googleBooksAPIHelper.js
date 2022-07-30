@@ -25,6 +25,7 @@ async function bookSearch(searchTerms) {
       book_author: googleBook.volumeInfo.authors,
       book_description: googleBook.volumeInfo.description,
       book_genre: googleBook.volumeInfo.categories,
+      cover_img: googleBook.volumeInfo.imageLinks.large,
     };
     books.push(book);
   }
@@ -50,11 +51,12 @@ async function getBookDetails(volId) {
   }
 
   const bookData = {
-    external_book_id: resData.volumeInfo.id,
+    external_book_id: resData.id,
     book_title: resData.volumeInfo.title,
     book_author: resData.volumeInfo.authors,
     book_description: resData.volumeInfo.description,
     book_genre: resData.volumeInfo.categories,
+    cover_img: resData.volumeInfo.imageLinks.large,
   };
 
   Book.addBook(bookData);
