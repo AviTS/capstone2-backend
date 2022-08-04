@@ -53,7 +53,7 @@ router.post('/:library_id/books', isLoggedIn, async function (req, res, next) {
   try {
     const user_id = res.locals.user.user_id;
 
-    const library_id = +req.body.library_id;
+    const library_id = +req.params.library_id;
     const book_id = +req.body.book_id;
 
     const library = await Library.addBookToLib(user_id, library_id, book_id);
@@ -108,6 +108,23 @@ router.patch('/notes', isLoggedIn, async function (req, res, next) {
 
     return res.json({
       Note: `Book ${book_id} from User ${user_id}'s ${library_id} library has a new or updated note.`,
+    });
+  } catch (err) {
+    return next(err);
+  }
+});
+
+router.patch('/readstatus', isLoggedIn, async function (req, res, next) {
+  try {
+    const user_id = res.locals.user.user_id;
+    const library_id = +req.body.library_id;
+    const book_id = +req.body.book_id;
+    const read_status = req.body.read_status;
+
+    await Library.updateReadStatus(user_id, library_id, book_id, read_status);
+
+    return res.json({
+      Status: `Read status has been updated to ${read_status}`,
     });
   } catch (err) {
     return next(err);

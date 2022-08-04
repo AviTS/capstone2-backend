@@ -69,7 +69,9 @@ class Library {
 
   static async getBooksInLib(user_id, library_id) {
     const result = await db.query(
-      `SELECT * FROM library_books WHERE user_id = $1 AND library_id = $2`,
+      `SELECT * FROM library_books 
+      JOIN books USING (book_id)
+      WHERE user_id = $1 AND library_id = $2`,
       [user_id, library_id]
     );
 
@@ -111,6 +113,17 @@ class Library {
     );
 
     const book_note = result.rows[0];
+  }
+
+  static async updateReadStatus(user_id, library_id, book_id, read_status) {
+    const result = await db.query(
+      `
+      UPDATE library_books SET read_status = $1 WHERE user_id = $1 AND library_id = $3 AND book_id = $4
+      `,
+      [read_status, user_id, library_id, book_id]
+    );
+
+    const book_read_status = result.rows[0];
   }
 }
 

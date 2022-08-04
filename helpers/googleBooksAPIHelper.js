@@ -9,7 +9,7 @@ async function bookSearch(searchTerms) {
   const result = await axios.get(
     `${API_BASE_URL}?q=${searchTerms}&key=${GOOGLE_BOOKS_API_KEY}`
   );
-  console.log(result);
+  // console.log(result);
 
   const resData = result.data.items;
   // console.log(resData);
@@ -29,7 +29,7 @@ async function bookSearch(searchTerms) {
     };
     books.push(book);
   }
-
+  // console.log(books);
   return books;
 }
 
