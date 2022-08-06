@@ -36,6 +36,7 @@ async function bookSearch(searchTerms) {
 async function getBookDetails(volId) {
   const book = await Book.getBook(volId);
   if (book !== undefined) {
+    // checks if book is in DB --> if yes, return book from db. otherwise will make api call ^^
     return book;
   }
 
@@ -52,16 +53,16 @@ async function getBookDetails(volId) {
 
   const bookData = {
     external_book_id: resData.id,
-    book_title: resData.volumeInfo.title,
-    book_author: resData.volumeInfo.authors,
+    title: resData.volumeInfo.title,
+    author: resData.volumeInfo.authors,
     book_description: resData.volumeInfo.description,
-    book_genre: resData.volumeInfo.categories,
+    genre: resData.volumeInfo.categories,
     cover_img: resData.volumeInfo.imageLinks.large,
   };
 
-  Book.addBook(bookData);
+  const dbBook = await Book.addBook(bookData);
 
-  return bookData;
+  return dbBook;
 }
 
 module.exports = { getBookDetails, bookSearch };
