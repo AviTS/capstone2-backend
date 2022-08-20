@@ -35,7 +35,13 @@ async function bookSearch(searchTerms, page) {
       console.log(err);
     }
   }
-  return books;
+
+  const booksObj = {
+    books: books,
+    maxPages: maxPages,
+  };
+
+  return booksObj;
 }
 
 async function getBookDetails(volId) {

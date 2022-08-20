@@ -19,8 +19,8 @@ router.get(
       const page = req.params.page;
 
       const results = await bookSearch(searchTerm, page);
-      console.log({ results });
-      return res.json({ results });
+
+      return res.json(results);
     } catch (err) {
       return next(err);
     }
