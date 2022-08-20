@@ -1,4 +1,8 @@
-const { ExpressError, BadRequestError } = require('../helpers/expressError');
+const {
+  ExpressError,
+  BadRequestError,
+  DuplicateBookError,
+} = require('../helpers/expressError');
 const db = require('../db');
 
 class Library {
@@ -39,8 +43,6 @@ class Library {
     return library;
   }
 
-  //Below function needs to be updated:
-  //query books (ext API) --> add book to books table --> get all libraries --> select a library (book_id, lib_id) and when user selects library, insert the book.
   static async addBookToLib(user_id, library_id, book_id) {
     const duplicateCheck = await db.query(
       `SELECT user_id, library_id, book_id
@@ -50,9 +52,9 @@ class Library {
     );
 
     if (duplicateCheck.rows[0])
-      throw new BadRequestError(
+      throw new DuplicateBookError(
         `User ${user_id} already has book ${book_id} in their library.`,
-        400
+        600
       );
 
     const result = await db.query(

@@ -34,20 +34,4 @@ async function isLoggedIn(req, res, next) {
   }
 }
 
-// async function ensureCorrectUser(req, res, next) {
-//   try {
-//     const user = res.locals.user;
-//     if (
-//       !(
-//         user &&
-//         user.user_id === (await User.getUserId(res.locals.user.username))
-//       )
-//     ) {
-//       throw new UnauthorizedError();
-//     }
-//   } catch (err) {
-//     return next(err);
-//   }
-// }
-
 module.exports = { authenticateJWT, isLoggedIn };

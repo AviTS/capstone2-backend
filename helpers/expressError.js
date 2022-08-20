@@ -9,6 +9,12 @@ class ExpressError extends Error {
   }
 }
 
+class DuplicateBookError extends ExpressError {
+  constructor(message = 'This book already exists') {
+    super(message, 600);
+  }
+}
+
 class BadRequestError extends ExpressError {
   constructor(message = 'Bad Request') {
     super(message, 400);
@@ -39,4 +45,5 @@ module.exports = {
   NotFoundError,
   UnauthorizedError,
   ForbiddenError,
+  DuplicateBookError,
 };

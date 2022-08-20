@@ -5,38 +5,42 @@ const { GOOGLE_BOOKS_API_KEY } = require('../config');
 
 const Book = require('../models/book');
 
-async function bookSearch(searchTerms) {
+async function bookSearch(searchTerms, page) {
   const result = await axios.get(
-    `${API_BASE_URL}?q=${searchTerms}&key=${GOOGLE_BOOKS_API_KEY}`
+    `${API_BASE_URL}?q=${searchTerms}&key=${GOOGLE_BOOKS_API_KEY}&startIndex=${
+      page * 10
+    }`
   );
-  // console.log(result);
 
   const resData = result.data.items;
-  // console.log(resData);
+  const totalItems = result.data.totalItems;
+  const maxPages = Math.ceil(totalItems / 10);
+
   let books = [];
 
   for (let i in resData) {
-    let googleBook = resData[i];
-    // console.log(googleBook);
+    try {
+      let googleBook = resData[i];
 
-    let book = {
-      external_book_id: googleBook.id,
-      book_title: googleBook.volumeInfo.title,
-      book_author: googleBook.volumeInfo.authors,
-      book_description: googleBook.volumeInfo.description,
-      book_genre: googleBook.volumeInfo.categories,
-      cover_img: googleBook.volumeInfo.imageLinks.large,
-    };
-    books.push(book);
+      let book = {
+        external_book_id: googleBook.id,
+        book_title: googleBook.volumeInfo.title,
+        book_author: googleBook.volumeInfo.authors,
+        book_description: googleBook.volumeInfo.description,
+        book_genre: googleBook.volumeInfo.categories,
+        cover_img: null,
+      };
+      books.push(book);
+    } catch (err) {
+      console.log(err);
+    }
   }
-  // console.log(books);
   return books;
 }
 
 async function getBookDetails(volId) {
   const book = await Book.getBook(volId);
   if (book !== undefined) {
-    // checks if book is in DB --> if yes, return book from db. otherwise will make api call ^^
     return book;
   }
 
@@ -46,7 +50,6 @@ async function getBookDetails(volId) {
 
   const resData = result.data;
 
-  //note to self: check db for volId before any api call. if book isn't found, call api.
   if (resData.items) {
     resData = resData.items[0];
   }
