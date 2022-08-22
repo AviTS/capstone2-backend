@@ -58,8 +58,6 @@ class User {
 
     if (!user) throw new Error(`No user: ${username}`);
 
-    console.log(user);
-
     return user;
   }
 
