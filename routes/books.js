@@ -8,8 +8,6 @@ const {
 } = require('../helpers/googleBooksAPIHelper');
 const router = new express.Router();
 
-// const { BadRequestError } = require('../helpers/expressError');
-
 router.get(
   '/search/q=:searchterm&page=:page',
   isLoggedIn,
