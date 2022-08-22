@@ -15,6 +15,12 @@ class DuplicateBookError extends ExpressError {
   }
 }
 
+class DuplicateUserError extends ExpressError {
+  constructor(message = 'Username already in use') {
+    super(message, 601);
+  }
+}
+
 class BadRequestError extends ExpressError {
   constructor(message = 'Bad Request') {
     super(message, 400);
@@ -46,4 +52,5 @@ module.exports = {
   UnauthorizedError,
   ForbiddenError,
   DuplicateBookError,
+  DuplicateUserError,
 };

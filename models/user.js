@@ -4,6 +4,7 @@ const {
   ExpressError,
   BadRequestError,
   UnauthorizedError,
+  DuplicateUserError,
 } = require('../helpers/expressError');
 const { BCRYPT_WORK_FACTOR } = require('../config');
 
@@ -72,7 +73,7 @@ class User {
     );
 
     if (duplicateCheck.rows[0]) {
-      throw new BadRequestError(`${username} already exists.`, 400);
+      throw new DuplicateUserError(`User already exists.`, 601);
     }
 
     const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
