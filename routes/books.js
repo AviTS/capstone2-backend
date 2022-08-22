@@ -1,6 +1,4 @@
 const express = require('express');
-// const Book = require('../models/book');
-// const axios = require('axios');
 const { isLoggedIn } = require('../middleware/auth');
 const {
   getBookDetails,
