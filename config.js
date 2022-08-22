@@ -4,7 +4,7 @@ require('dotenv');
 
 const SECRET_KEY = process.env.SECRET_KEY || 'my-secret-key';
 
-const GOOGLE_BOOKS_API_KEY = 'AIzaSyDDYODs1CdhaB3BZhAvsQUg_B-jU_01L5I';
+const GOOGLE_BOOKS_API_KEY = process.env.GOOGLE_BOOKS_API_KEY;
 
 const PORT = +process.env.PORT || 3001;
 
