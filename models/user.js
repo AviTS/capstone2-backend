@@ -3,8 +3,8 @@ const db = require('../db');
 const {
   ExpressError,
   BadRequestError,
-  UnauthorizedError,
   DuplicateUserError,
+  BadLoginInfo,
 } = require('../helpers/expressError');
 const { BCRYPT_WORK_FACTOR } = require('../config');
 
@@ -30,7 +30,7 @@ class User {
       }
     }
 
-    throw new UnauthorizedError('Invalid username/password');
+    throw new BadLoginInfo('Invalid username/password');
   }
 
   static async getUserId(username) {

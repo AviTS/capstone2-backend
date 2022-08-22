@@ -21,6 +21,12 @@ class DuplicateUserError extends ExpressError {
   }
 }
 
+class BadLoginInfo extends ExpressError {
+  constructor(message = 'Incorrect login information.') {
+    super(message, 602);
+  }
+}
+
 class BadRequestError extends ExpressError {
   constructor(message = 'Bad Request') {
     super(message, 400);
@@ -53,4 +59,5 @@ module.exports = {
   ForbiddenError,
   DuplicateBookError,
   DuplicateUserError,
+  BadLoginInfo,
 };
